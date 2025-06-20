@@ -298,12 +298,10 @@ function App() {
                   <h1 className="text-3xl font-bold text-gray-900 mb-4">
                     {selectedPost.title}
                   </h1>
-                  <div className="flex items-center space-x-4 text-sm text-gray-600">
-                    <span>작성일: {formatDate(selectedPost.createdAt)}</span>
-                    <span>수정일: {formatDate(selectedPost.updatedAt)}</span>
-                  </div>
-                  <div className="flex items-center space-x-4 text-sm text-gray-600">
-                    <span>작성자: {selectedPost.writer}</span>
+                  <div className="flex flex-col text-sm text-gray-600 space-y-1">
+                    <div>✏️ {formatDate(selectedPost.createdAt)}</div>
+                    <div>✍️: {formatDate(selectedPost.updatedAt)}</div>
+                    <div>🙋🏼‍♂️: {selectedPost.writer}</div>
                   </div>
                 </div>
                 <div className="flex space-x-2">

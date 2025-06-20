@@ -23,10 +23,10 @@ export const RecentPosts: React.FC<RecentPostsProps> = ({
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
       <div className="flex items-center space-x-2 mb-6">
-        <Clock className="w-5 h-5 text-blue-600" />
+        <Clock className="w-5 h-5 text-emerald-600" />
         <h2 className="text-lg font-semibold text-gray-900">최근 업데이트</h2>
       </div>
-      
+
       <div className="space-y-4">
         {recentPosts.length > 0 ? (
           recentPosts.map((post) => (

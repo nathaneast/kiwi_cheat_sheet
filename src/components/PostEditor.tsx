@@ -145,7 +145,7 @@ export const PostEditor: React.FC<PostEditorProps> = ({
             type="submit"
             className="flex items-center space-x-2 bg-emerald-600 text-white px-6 py-2 rounded-lg hover:bg-emerald-700 transition-colors"
           >
-            <Save className="w-4 h-4" />
+            <Save className="w-4 h-4 text-emerald-100 group-hover:text-emerald-200" />
             <span>{post ? "수정 완료" : "게시하기"}</span>
           </button>
           <button
@@ -153,7 +153,7 @@ export const PostEditor: React.FC<PostEditorProps> = ({
             onClick={onCancel}
             className="flex items-center space-x-2 bg-gray-200 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-300 transition-colors"
           >
-            <X className="w-4 h-4" />
+            <X className="w-4 h-4 text-gray-500" />
             <span>취소</span>
           </button>
         </div>

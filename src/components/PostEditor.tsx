@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Save, X } from 'lucide-react';
-import { Post } from '../types';
+import React, { useState, useEffect, useRef } from "react";
+import { Save, X } from "lucide-react";
+import { Post } from "../types";
 
 interface PostEditorProps {
   post?: Post | null;
@@ -15,11 +15,14 @@ export const PostEditor: React.FC<PostEditorProps> = ({
   categoryName,
   subcategoryName,
   onSave,
-  onCancel
+  onCancel,
 }) => {
-  const [title, setTitle] = useState('');
-  const [writer, setWriter] = useState('');
-  const [content, setContent] = useState('');
+  const [title, setTitle] = useState("");
+  const [writer, setWriter] = useState("");
+  const [content, setContent] = useState("");
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const minHeight = 120; // 최소 높이(px)
+  const maxHeight = 480; // 최대 높이(px)
 
   useEffect(() => {
     if (post) {
@@ -28,6 +31,27 @@ export const PostEditor: React.FC<PostEditorProps> = ({
       setWriter(post.writer);
     }
   }, [post]);
+
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "auto";
+      let newHeight = textareaRef.current.scrollHeight;
+      if (newHeight < minHeight) newHeight = minHeight;
+      if (newHeight > maxHeight) newHeight = maxHeight;
+      textareaRef.current.style.height = newHeight + "px";
+    }
+  }, [content]);
+
+  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setContent(e.target.value);
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "auto";
+      let newHeight = textareaRef.current.scrollHeight;
+      if (newHeight < minHeight) newHeight = minHeight;
+      if (newHeight > maxHeight) newHeight = maxHeight;
+      textareaRef.current.style.height = newHeight + "px";
+    }
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -84,8 +108,14 @@ export const PostEditor: React.FC<PostEditorProps> = ({
           <textarea
             id="content"
             value={content}
-            onChange={(e) => setContent(e.target.value)}
-            rows={12}
+            onChange={handleContentChange}
+            ref={textareaRef}
+            rows={6}
+            style={{
+              minHeight: minHeight,
+              maxHeight: maxHeight,
+              overflowY: "auto",
+            }}
             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
             placeholder="내용을 입력하세요. 마크다운 문법을 사용할 수 있습니다."
             required

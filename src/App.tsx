@@ -21,56 +21,57 @@ function App() {
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [editingPost, setEditingPost] = useState<Post | null>(null);
-  const [fromRecent, setFromRecent] = useState(false);
 
-  const { posts, loading, error, createPost, updatePost, deletePost } = usePosts();
+  const { posts, loading, error, createPost, updatePost, deletePost } =
+    usePosts();
 
   const handleCategoryClick = (categoryId: string) => {
     setSelectedCategory(categoryId);
-    setCurrentView('category');
+    setCurrentView("category");
   };
 
   const handleSubcategoryClick = (subcategoryId: string) => {
     setSelectedSubcategory(subcategoryId);
-    setCurrentView('subcategory');
+    setCurrentView("subcategory");
   };
 
   const handlePostClick = (post: Post) => {
-    if (currentView === 'home') {
+    if (currentView === "home") {
       setSelectedCategory(post.category);
       setSelectedSubcategory(post.subcategory);
-      setFromRecent(true);
-    } else {
-      setFromRecent(false);
     }
     setSelectedPost(post);
-    setCurrentView('post');
+    setCurrentView("post");
   };
 
   const handleCreatePost = () => {
     setEditingPost(null);
-    setCurrentView('create');
+    setCurrentView("create");
   };
 
   const handleEditPost = (post: Post) => {
     setEditingPost(post);
-    setCurrentView('edit');
+    setCurrentView("edit");
   };
 
   const handleDeletePost = async (postId: string) => {
-    if (window.confirm('정말로 이 글을 삭제하시겠습니까?')) {
+    if (window.confirm("정말로 이 글을 삭제하시겠습니까?")) {
       try {
         await deletePost(postId);
         if (selectedPost?.id === postId) {
           handleBack();
         }
       } catch (err) {
-        alert('글 삭제에 실패했습니다. 다시 시도해주세요.');
+        alert("글 삭제에 실패했습니다. 다시 시도해주세요.");
       }
     }
   };
 
-  const handleSavePost = async (title: string, content: string, writer: string) => {
+  const handleSavePost = async (
+    title: string,
+    content: string,
+    writer: string
+  ) => {
     try {
       if (editingPost) {
         await updatePost(editingPost.id, { title, content });
@@ -80,81 +81,85 @@ function App() {
           content,
           writer,
           category: selectedCategory,
-          subcategory: selectedSubcategory
+          subcategory: selectedSubcategory,
         });
       }
-      setCurrentView('subcategory');
+      setCurrentView("subcategory");
       setEditingPost(null);
     } catch (err) {
-      alert('글 저장에 실패했습니다. 다시 시도해주세요.');
+      alert("글 저장에 실패했습니다. 다시 시도해주세요.");
     }
   };
 
   const handleBack = () => {
-    if (currentView === 'post' && fromRecent) {
-      setCurrentView('home');
-      setFromRecent(false);
-      return;
-    }
     switch (currentView) {
-      case 'category':
-        setCurrentView('home');
+      case "category":
+        setCurrentView("home");
         break;
-      case 'subcategory':
-        setCurrentView('category');
+      case "subcategory":
+        setCurrentView("category");
         break;
-      case 'post':
-        setCurrentView('subcategory');
+      case "post":
+        setCurrentView("subcategory");
         break;
-      case 'create':
-      case 'edit':
-        setCurrentView('subcategory');
+      case "create":
+      case "edit":
+        setCurrentView("subcategory");
         break;
       default:
-        setCurrentView('home');
+        setCurrentView("home");
     }
   };
 
   const getFilteredPosts = () => {
     let filtered = posts;
     if (selectedCategory && selectedSubcategory) {
-      filtered = filtered.filter((p: Post) =>
-        p.category === selectedCategory && p.subcategory === selectedSubcategory
+      filtered = filtered.filter(
+        (p: Post) =>
+          p.category === selectedCategory &&
+          p.subcategory === selectedSubcategory
       );
     }
     if (searchTerm) {
-      filtered = filtered.filter((p: Post) =>
-        p.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        p.content.toLowerCase().includes(searchTerm.toLowerCase())
+      filtered = filtered.filter(
+        (p: Post) =>
+          p.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          p.content.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
     return filtered;
   };
 
-  const getCurrentCategory = () => categories.find((c: Category) => c.id === selectedCategory);
-  const getCurrentSubcategory = () => getCurrentCategory()?.subcategories.find((s: Subcategory) => s.id === selectedSubcategory);
+  const getCurrentCategory = () =>
+    categories.find((c: Category) => c.id === selectedCategory);
+  const getCurrentSubcategory = () =>
+    getCurrentCategory()?.subcategories.find(
+      (s: Subcategory) => s.id === selectedSubcategory
+    );
 
   const getPostCount = (categoryId: string) => {
     return posts.filter((p: Post) => p.category === categoryId).length;
   };
 
   const getTitle = () => {
-    if (currentView === 'post' && fromRecent) {
-      return '';
+    if (currentView === "post") {
+      return "";
     }
     switch (currentView) {
-      case 'category':
-        return getCurrentCategory()?.name || '';
-      case 'subcategory':
-        return `${getCurrentCategory()?.name} > ${getCurrentSubcategory()?.name}`;
-      case 'post':
-        return selectedPost?.title || '';
-      case 'create':
-        return '새 글 작성';
-      case 'edit':
-        return '글 수정';
+      case "category":
+        return getCurrentCategory()?.name || "";
+      case "subcategory":
+        return `${getCurrentCategory()?.name} > ${
+          getCurrentSubcategory()?.name
+        }`;
+      case "post":
+        return selectedPost?.title || "";
+      case "create":
+        return "새 글 작성";
+      case "edit":
+        return "글 수정";
       default:
-        return '';
+        return "";
     }
   };
 
@@ -205,13 +210,13 @@ function App() {
             </div>
           </div>
         )}
-        
+
         {currentView === "category" && getCurrentCategory() && (
           <div>
             <div className="mb-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">
+              {/* <h2 className="text-2xl font-bold text-gray-900 mb-4">
                 {getCurrentCategory()?.name}
-              </h2>
+              </h2> */}
               <p className="text-gray-600">
                 {getCurrentCategory()?.subcategories.length}개의 하위 카테고리가
                 있습니다.
@@ -248,9 +253,6 @@ function App() {
           <div>
             <div className="flex justify-between items-center mb-8">
               <div>
-                <h2 className="text-2xl font-bold text-gray-900">
-                  {getCurrentSubcategory()?.name}
-                </h2>
                 <p className="text-gray-600 mt-1">
                   {getFilteredPosts().length}개의 게시글이 있습니다.
                 </p>

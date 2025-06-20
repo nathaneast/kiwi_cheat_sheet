@@ -143,7 +143,7 @@ export const PostEditor: React.FC<PostEditorProps> = ({
         <div className="flex space-x-4">
           <button
             type="submit"
-            className="flex items-center space-x-2 bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+            className="flex items-center space-x-2 bg-emerald-600 text-white px-6 py-2 rounded-lg hover:bg-emerald-700 transition-colors"
           >
             <Save className="w-4 h-4" />
             <span>{post ? "수정 완료" : "게시하기"}</span>

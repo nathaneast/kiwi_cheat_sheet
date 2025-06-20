@@ -259,7 +259,7 @@ function App() {
               </div>
               <button
                 onClick={handleCreatePost}
-                className="flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                className="flex items-center space-x-2 bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors"
               >
                 <Plus className="w-4 h-4" />
                 <span>글 작성</span>
@@ -281,7 +281,7 @@ function App() {
                   <p className="text-gray-500 mb-4">아직 게시글이 없습니다.</p>
                   <button
                     onClick={handleCreatePost}
-                    className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                    className="bg-emerald-600 text-white px-6 py-2 rounded-lg hover:bg-emerald-700 transition-colors"
                   >
                     첫 번째 글 작성하기
                   </button>
@@ -309,7 +309,7 @@ function App() {
                 <div className="flex space-x-2">
                   <button
                     onClick={() => handleEditPost(selectedPost)}
-                    className="flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                    className="flex items-center space-x-2 bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors"
                   >
                     <Plus className="w-4 h-4" />
                     <span>수정</span>

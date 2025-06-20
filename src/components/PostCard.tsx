@@ -31,7 +31,7 @@ export const PostCard: React.FC<PostCardProps> = ({
           <div className="flex space-x-2">
             <button
               onClick={onEdit}
-              className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+              className="p-2 text-gray-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors"
               title="수정"
             >
               <Edit className="w-4 h-4" />
